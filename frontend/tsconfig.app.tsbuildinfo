@@ -1,0 +1,1 @@
+{"root":["./src/main.tsx","./src/components/statuscard.tsx","./src/hooks/usehealth.ts","./src/layouts/applayout.tsx","./src/pages/analyticspage.tsx","./src/pages/automationspage.tsx","./src/pages/dashboardpage.tsx","./src/pages/messagespage.tsx","./src/pages/settingspage.tsx","./src/routes/index.tsx","./src/services/api.ts","./src/types/index.ts"],"version":"5.9.3"}
