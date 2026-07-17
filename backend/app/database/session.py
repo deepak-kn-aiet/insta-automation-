@@ -1,10 +1,15 @@
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+"""Database dependency helpers for request-scoped sessions."""
 
-from app.config.settings import settings
-from app.models.base import Base
+from typing import Generator
 
-engine = create_engine(settings.database_url, echo=settings.debug)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+from sqlalchemy.orm import Session
 
-# TODO: Add Alembic migrations and model definitions.
+from app.database.database import SessionLocal
+
+
+def get_db() -> Generator[Session, None, None]:
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()

@@ -1,18 +1,14 @@
+"""Dependency helpers for shared application settings."""
+
+from typing import Annotated
+
 from fastapi import Depends
 
-from app.config.settings import Settings, settings
+from app.core.config import Settings, get_settings
 
 
-class AppDependencies:
-    def __init__(self) -> None:
-        self.settings = settings
-
-    def get_settings(self) -> Settings:
-        return self.settings
+SettingsDependency = Annotated[Settings, Depends(get_settings)]
 
 
-app_dependencies = AppDependencies()
-
-
-def get_settings() -> Settings:
-    return app_dependencies.get_settings()
+def get_settings_dependency(settings: SettingsDependency) -> Settings:
+    return settings
