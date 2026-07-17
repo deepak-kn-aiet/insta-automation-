@@ -10,12 +10,10 @@ BACKEND_ROOT = Path(__file__).resolve().parent
 if str(BACKEND_ROOT) not in sys.path:
     sys.path.insert(0, str(BACKEND_ROOT))
 
+from app.api.v1.router import router as api_v1_router
 from app.core.config import get_settings
 from app.middleware.error_handler import ExceptionHandlingMiddleware
 from app.middleware.request_logger import RequestLoggingMiddleware
-from app.routes.automation import router as automation_router
-from app.routes.health import router as health_router
-from app.routes.root import router as root_router
 
 settings = get_settings()
 
@@ -33,9 +31,7 @@ app.add_middleware(
 app.add_middleware(RequestLoggingMiddleware)
 app.add_middleware(ExceptionHandlingMiddleware)
 
-app.include_router(root_router)
-app.include_router(health_router)
-app.include_router(automation_router)
+app.include_router(api_v1_router)
 
 
 class HealthResponse(BaseModel):
@@ -45,7 +41,11 @@ class HealthResponse(BaseModel):
 
 @app.get("/")
 def read_root() -> dict[str, str]:
-    return {"message": "Instagram Automation Assistant API"}
+    return {
+        "app": "instagram-assistant",
+        "version": settings.app_version,
+        "status": "running",
+    }
 
 
 @app.get("/health", response_model=HealthResponse)
