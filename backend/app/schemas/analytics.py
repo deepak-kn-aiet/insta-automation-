@@ -11,7 +11,7 @@ from pydantic import BaseModel, ConfigDict, Field
 class AnalyticsBase(BaseModel):
     """Shared analytics fields."""
 
-    keyword: str = Field(..., min_length=1, max_length=100)
+    automation_id: UUID
     trigger_count: int = Field(default=0, ge=0)
 
 
@@ -22,7 +22,7 @@ class AnalyticsCreate(AnalyticsBase):
 class AnalyticsUpdate(BaseModel):
     """Schema for updating analytics data."""
 
-    keyword: str | None = Field(default=None, min_length=1, max_length=100)
+    automation_id: UUID | None = None
     trigger_count: int | None = Field(default=None, ge=0)
 
 

@@ -30,7 +30,7 @@ def test_pydantic_schemas_validate_model_data() -> None:
         direction=MessageDirection.INCOMING,
         status=MessageStatus.PENDING,
     )
-    analytics = AnalyticsCreate(keyword="hello", trigger_count=1)
+    analytics = AnalyticsCreate(automation_id=__import__("uuid").uuid4(), trigger_count=1)
 
     assert user.username == "alice"
     assert automation.reply_type == AutomationReplyType.TEXT

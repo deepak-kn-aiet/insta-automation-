@@ -14,6 +14,7 @@ from app.database.base import Base
 from app.models._mixins import TimestampMixin
 
 if TYPE_CHECKING:
+    from app.models.analytics import Analytics
     from app.models.user import User
 
 
@@ -49,3 +50,8 @@ class Automation(TimestampMixin, Base):
     is_enabled: Mapped[bool] = mapped_column(default=True, nullable=False)
 
     user: Mapped["User"] = relationship(back_populates="automations")
+    analytics: Mapped[list["Analytics"]] = relationship(
+        back_populates="automation",
+        cascade="all, delete-orphan",
+        passive_deletes=True,
+    )
